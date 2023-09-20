@@ -10,7 +10,7 @@ const useFetchPosts = () => {
   );
 
   return {
-    posts: data?.posts ?? [],
+    posts: data?.posts,
     isPostsLoading,
   };
 };

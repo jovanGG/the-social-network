@@ -4,10 +4,10 @@ import useAuth from "../features/auth/hooks/useAuth";
 import { Routes } from "./config";
 
 const ProtectedRoute = () => {
-  const { user } = useAuth();
+  const { token } = useAuth();
 
-  if (!user) {
-    return <Navigate to={Routes.Login.path} />;
+  if (!token) {
+    return <Navigate to={Routes.Login.path} replace />;
   }
 
   return <Outlet />;

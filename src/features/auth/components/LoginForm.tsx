@@ -88,7 +88,7 @@ const LoginForm = () => {
           </FormErrorMessage>
         </FormControl>
 
-        <Button size="md" type="submit">
+        <Button variant="brandPrimary" size="md" type="submit">
           Confirm
         </Button>
       </VStack>

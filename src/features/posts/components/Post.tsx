@@ -1,15 +1,19 @@
 import {
-  CardBody,
   CardHeader,
+  CardBody,
   Avatar,
   Button,
+  Image,
   Card,
   Text,
   Flex,
-  Image,
 } from "@chakra-ui/react";
+import { faComment, faCalendar } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 import { Post as PostTypes } from "../utils/types";
+import { formatDate } from "../utils/formatDate";
 
 interface PostProps {
   post: PostTypes;
@@ -21,6 +25,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
     created_at,
     comments,
     image,
+    liked,
     audio,
     likes,
     text,
@@ -36,21 +41,50 @@ const Post: React.FC<PostProps> = ({ post }) => {
               <Text color="grey-3.500" fontSize="sm">
                 @{username}
               </Text>
-              <Text color="black.500" fontWeight="bold">
+              <Text fontSize="md" color="black.500" fontWeight="bold">
                 {full_name}
               </Text>
             </Flex>
           </Flex>
-          <Flex>{created_at}</Flex>
+          <Flex alignItems="center" gap={1}>
+            <FontAwesomeIcon color="#A6A6A6" icon={faCalendar} size="sm" />
+            <Text textColor="grey-3.500" fontSize="sm">
+              {formatDate(created_at)}
+            </Text>
+          </Flex>
         </Flex>
       </CardHeader>
       <CardBody>
-        {image && <Image borderRadius={10} src={image} />}
+        {image && (
+          <Image
+            borderRadius={10}
+            objectFit="cover"
+            width="full"
+            maxH="285px"
+            src={image}
+          />
+        )}
         {audio && <Text>Has audio</Text>}
         <Text color="black.500">{text}</Text>
 
-        <Button>{likes}</Button>
-        <Button>{comments}</Button>
+        <Flex gap={4}>
+          <Button
+            leftIcon={<FontAwesomeIcon icon={faHeart} />}
+            variant="brandPrimaryAlt"
+            isActive={liked}
+            size="sm"
+          >
+            {likes}
+          </Button>
+          <Button
+            leftIcon={<FontAwesomeIcon icon={faComment} />}
+            variant="brandPrimaryAlt"
+            isActive={liked}
+            size="sm"
+          >
+            {comments}
+          </Button>
+        </Flex>
       </CardBody>
     </Card>
   );
