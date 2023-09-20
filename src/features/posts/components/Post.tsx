@@ -12,6 +12,7 @@ import { faComment, faCalendar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
+import useSendLikeStatus from "../hooks/useSendLikeStatus";
 import { Post as PostTypes } from "../utils/types";
 import { formatDate } from "../utils/formatDate";
 
@@ -24,12 +25,20 @@ const Post: React.FC<PostProps> = ({ post }) => {
     user: { username, full_name, picture },
     created_at,
     comments,
+    post_id,
     image,
     liked,
     audio,
     likes,
     text,
   } = post;
+
+  const { sendLikeOrUnlike, isLikeStatusSending, isUnlikeStatusSending } =
+    useSendLikeStatus(post_id);
+
+  const handleLikeChange = () => {
+    sendLikeOrUnlike(liked);
+  };
 
   return (
     <Card>
@@ -69,7 +78,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
         <Flex gap={4}>
           <Button
+            isLoading={isLikeStatusSending || isUnlikeStatusSending}
             leftIcon={<FontAwesomeIcon icon={faHeart} />}
+            onClick={handleLikeChange}
             variant="brandPrimaryAlt"
             isActive={liked}
             size="sm"
@@ -79,7 +90,6 @@ const Post: React.FC<PostProps> = ({ post }) => {
           <Button
             leftIcon={<FontAwesomeIcon icon={faComment} />}
             variant="brandPrimaryAlt"
-            isActive={liked}
             size="sm"
           >
             {comments}

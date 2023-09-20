@@ -14,3 +14,17 @@ export const fetchPostApi = async (post_id: string) => {
 
   return response.data;
 };
+
+export const SEND_LIKE_STATUS_KEY = "sendLikeStatusKey";
+export const sendLikeStatusApi = async (post_id: string) => {
+  const response = await axios.post(`${API_BASE_URL}/posts/${post_id}/like`);
+
+  return response.data;
+};
+
+export const DELETE_LIKE_STATUS_KEY = "deleteLikeStatusKey";
+export const deleteLikeStatusApi = async (post_id: string) => {
+  const response = await axios.delete(`${API_BASE_URL}/posts/${post_id}/like`);
+
+  return response.data;
+};
