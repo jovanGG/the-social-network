@@ -28,6 +28,11 @@ export interface SendCommentRequest {
   text: string;
 }
 
+export interface SendPostRequest {
+  text: string;
+  audio?: Blob;
+}
+
 export interface PostCommentResponse {
   status: string;
   comments: PostComment[];

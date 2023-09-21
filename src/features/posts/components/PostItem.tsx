@@ -85,7 +85,7 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
             onClick={handleLikeChange}
             variant="brandPrimaryAlt"
             isActive={liked}
-            size="sm"
+            size="small"
           >
             {likes}
           </Button>
@@ -95,7 +95,7 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
                 leftIcon={<FontAwesomeIcon icon={faComment} />}
                 variant="brandPrimaryAlt"
                 onClick={onOpen}
-                size="sm"
+                size="small"
               >
                 {comments}
               </Button>

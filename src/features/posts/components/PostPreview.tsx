@@ -75,7 +75,7 @@ const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
             onClick={handleLikeChange}
             variant="brandPrimaryAlt"
             isActive={post.liked}
-            size="sm"
+            size="small"
           >
             {post.likes}
           </Button>

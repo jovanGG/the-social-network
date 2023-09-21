@@ -1,13 +1,13 @@
 import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 
-const md = defineStyle({
+const medium = defineStyle({
   borderRadius: 10,
   fontSize: "md",
   w: 180,
   h: 50,
 });
 
-const sm = defineStyle({
+const small = defineStyle({
   borderRadius: 5,
   fontSize: "md",
   w: 90,
@@ -46,5 +46,5 @@ const brandPrimaryAlt = defineStyle({
 
 export const Button = defineStyleConfig({
   variants: { brandPrimary, brandPrimaryAlt },
-  sizes: { sm, md },
+  sizes: { small, medium },
 });

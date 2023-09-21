@@ -10,6 +10,7 @@ import {
   ModalBody,
   Drawer,
   Modal,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import { ReactElement, ReactNode } from "react";
 
@@ -41,9 +42,10 @@ const ModalDrawer: React.FC<ModalDrawerProps> = ({
         </Drawer>
       ) : (
         <Modal size="2xl" isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
           <ModalContent>
             <ModalCloseButton />
-            <ModalBody>{children}</ModalBody>
+            <ModalBody p={7}>{children}</ModalBody>
           </ModalContent>
         </Modal>
       )}

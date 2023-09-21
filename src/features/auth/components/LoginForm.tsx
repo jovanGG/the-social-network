@@ -95,7 +95,7 @@ const LoginForm = () => {
           </Alert>
         )}
 
-        <Button variant="brandPrimary" size="md" type="submit">
+        <Button variant="brandPrimary" size="medium" type="submit">
           Confirm
         </Button>
       </Flex>

@@ -61,3 +61,10 @@ export const deletePostCommentApi = async (
 
   return response.data;
 };
+
+export const SEND_POST_KEY = "sendPostKey";
+export const sendPostApi = async (data: FormData) => {
+  const response = await axios.post(`${API_BASE_URL}/posts`, data);
+
+  return response.data;
+};

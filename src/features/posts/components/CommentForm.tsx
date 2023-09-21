@@ -9,9 +9,10 @@ import {
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
-import React from "react";
 
 import useSendPostComment from "../hooks/useSendPostComment";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { commentSchema } from "../utils/validations";
 import { SendCommentRequest } from "../utils/types";
 
 interface CommentFormProps {
@@ -25,7 +26,9 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SendCommentRequest>();
+  } = useForm<SendCommentRequest>({
+    resolver: yupResolver(commentSchema),
+  });
 
   const handleSendComment = (data: SendCommentRequest) => {
     sendComment(data);

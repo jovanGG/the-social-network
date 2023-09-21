@@ -29,7 +29,7 @@ const CommentItem: React.FC<PostComment> = ({
             </Text>
           </Flex>
         </Flex>
-        <Flex alignItems="center" gap={1}>
+        <Flex alignItems="center" gap={3}>
           <FontAwesomeIcon color="#A6A6A6" icon={faCalendar} size="sm" />
           <Text textColor="grey-3.500" fontSize="sm">
             {formatDate(created_at)}
