@@ -3,9 +3,10 @@ import {
   FormControl,
   FormLabel,
   Button,
-  VStack,
   Input,
   Image,
+  Flex,
+  Alert,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +24,7 @@ interface FormData {
 }
 
 const LoginForm = () => {
-  const { fetchToken, isFetchingToken } = useFetchAccessToken();
+  const { error, fetchToken, isFetchingToken } = useFetchAccessToken();
   const { handleAccessToken } = useAuth();
   const navigate = useNavigate();
 
@@ -45,9 +46,9 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleLogin)}>
-      <VStack spacing={5}>
-        <Image src={constel} />
+    <form style={{ width: "100%" }} onSubmit={handleSubmit(handleLogin)}>
+      <Flex flexDir="column" alignItems="center" gap={5}>
+        <Image maxW="80px" alt="Constellation" src={constel} />
 
         <FormControl isInvalid={Boolean(errors.email)}>
           <FormLabel fontSize="lg" fontWeight="black">
@@ -88,10 +89,16 @@ const LoginForm = () => {
           </FormErrorMessage>
         </FormControl>
 
+        {(error as any) && (
+          <Alert status="error">
+            {error.response.data.error.message as string}
+          </Alert>
+        )}
+
         <Button variant="brandPrimary" size="md" type="submit">
           Confirm
         </Button>
-      </VStack>
+      </Flex>
     </form>
   );
 };

@@ -13,14 +13,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 import useSendLikeStatus from "../hooks/useSendLikeStatus";
-import { Post as PostTypes } from "../utils/types";
 import { formatDate } from "../utils/formatDate";
+import PostPreview from "./PostPreview";
+import ModalDrawer from "./ModalDrawer";
+import { Post } from "../utils/types";
 
-interface PostProps {
-  post: PostTypes;
+interface PostItemProps {
+  post: Post;
 }
 
-const Post: React.FC<PostProps> = ({ post }) => {
+const PostItem: React.FC<PostItemProps> = ({ post }) => {
   const {
     user: { username, full_name, picture },
     created_at,
@@ -87,17 +89,23 @@ const Post: React.FC<PostProps> = ({ post }) => {
           >
             {likes}
           </Button>
-          <Button
-            leftIcon={<FontAwesomeIcon icon={faComment} />}
-            variant="brandPrimaryAlt"
-            size="sm"
-          >
-            {comments}
-          </Button>
+          <ModalDrawer
+            renderButton={({ onOpen }) => (
+              <Button
+                leftIcon={<FontAwesomeIcon icon={faComment} />}
+                variant="brandPrimaryAlt"
+                onClick={onOpen}
+                size="sm"
+              >
+                {comments}
+              </Button>
+            )}
+            children={<PostPreview post={post} />}
+          />
         </Flex>
       </CardBody>
     </Card>
   );
 };
 
-export default Post;
+export default PostItem;

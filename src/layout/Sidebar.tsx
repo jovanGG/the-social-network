@@ -10,8 +10,8 @@ const Sidebar = () => {
       alignItems={{ base: "center", md: "baseline" }}
       py={{ base: 3, md: 8 }}
       flexDir="column"
-      gap={12}
       width="full"
+      gap={12}
     >
       <Image h="32px" w="32px" src={constel} alt="Constellation" />
 
