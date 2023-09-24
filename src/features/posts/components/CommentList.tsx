@@ -5,20 +5,21 @@ import CommentItem from "./CommentItem";
 
 interface CommentListProps {
   comments: PostComment[];
+  postId: string;
 }
 
-const CommentList: React.FC<CommentListProps> = ({ comments }) => {
+const CommentList: React.FC<CommentListProps> = ({ comments, postId }) => {
   const commentCount = comments.length;
 
   return (
     <Flex flexDir="column" gap={5}>
-      <Text textColor="black.500" fontSize="lg" fontWeight="black">
+      <Text textStyle="h1">
         {commentCount} Comments
       </Text>
 
       <Flex flexDir="column" gap={4}>
         {comments.map((comment) => (
-          <CommentItem key={comment.comment_id} {...comment} />
+          <CommentItem key={comment.comment_id} postId={postId} {...comment} />
         ))}
       </Flex>
     </Flex>

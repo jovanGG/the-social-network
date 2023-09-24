@@ -7,7 +7,7 @@ import Header from "./Header";
 const Layout = () => {
   return (
     <Container
-      gridTemplateColumns={{ base: "1fr", md: "200px minmax(600px, 795px)" }}
+      gridTemplateColumns={{ base: "1fr", md: "200px minmax(500px, 795px)" }}
       gridTemplateRows={{ base: "auto 1fr" }}
       maxW="container.lg"
       display="grid"

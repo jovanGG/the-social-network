@@ -34,6 +34,39 @@ const theme = extendTheme({
     "grey-4": {
       500: "#848484",
     },
+    "grey-5": {
+      500: "#efefef",
+    },
+  },
+  textStyles: {
+    h1: {
+      fontSize: "lg",
+      color: "black.500",
+      fontWeight: "black",
+    },
+    h2: {
+      fontSize: "lg",
+      color: "black.500",
+      fontWeight: "bold",
+    },
+    h3: {
+      fontSize: "md",
+      color: "black.500",
+      fontWeight: "bold",
+    },
+    p1: {
+      fontSize: "md",
+      color: "black.500",
+    },
+    p2: {
+      fontSize: "md",
+      color: "black.500",
+      lineHeight: "22px",
+    },
+    p3: {
+      fontSize: "sm",
+      color: "grey-3.500",
+    },
   },
   fontSizes: {
     md: "15px",

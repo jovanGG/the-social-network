@@ -1,18 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { FETCH_POST_KEY, fetchPostApi } from "../utils/api";
-import { Post } from "../utils/types";
+import { PostApiRepsonse } from "../utils/types";
 
-const useFetchPosts = (post_id: string) => {
-  const { data: post, isLoading: isPostLoading } = useQuery<Post>(
-    [FETCH_POST_KEY],
-    () => fetchPostApi(post_id)
+const useFetchPost = (postId: string) => {
+  const {
+    data,
+    isError: isErrorPost,
+    isLoading: isLoadingPost,
+  } = useQuery<PostApiRepsonse>(
+    [FETCH_POST_KEY, postId],
+    () => fetchPostApi(postId),
+    {
+      enabled: !!postId,
+    }
   );
 
   return {
-    post,
-    isPostLoading,
+    post: data?.post,
+    isLoadingPost,
+    isErrorPost,
   };
 };
 
-export default useFetchPosts;
+export default useFetchPost;

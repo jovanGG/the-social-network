@@ -4,7 +4,11 @@ import { FETCH_POST_COMMENTS_KEY, fetchPostCommentsApi } from "../utils/api";
 import { PostCommentResponse } from "../utils/types";
 
 const useFetchPostComments = (post_id: string) => {
-  const { data, isLoading: isCommentsLoading } = useQuery<PostCommentResponse>(
+  const {
+    data,
+    isError: isErrorComments,
+    isLoading: isLoadingComments,
+  } = useQuery<PostCommentResponse>(
     [FETCH_POST_COMMENTS_KEY, post_id],
     () => fetchPostCommentsApi(post_id),
     {
@@ -14,7 +18,8 @@ const useFetchPostComments = (post_id: string) => {
 
   return {
     comments: data?.comments,
-    isCommentsLoading,
+    isLoadingComments,
+    isErrorComments,
   };
 };
 

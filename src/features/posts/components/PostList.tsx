@@ -1,17 +1,22 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 
-import { Post } from "../utils/types";
+import useFetchPosts from "../hooks/useFetchPosts";
 import PostItem from "./PostItem";
+import Loader from "./Loader";
 
-interface PostListProps {
-  posts: Post[];
-}
+const PostList = () => {
+  const { posts, isLoadingPosts, isErrorPosts } = useFetchPosts();
 
-const PostList: React.FC<PostListProps> = ({ posts }) => {
   return (
     <Flex flexDir="column" py={8} gap={6}>
-      {posts &&
-        posts.map((post) => <PostItem key={post.post_id} post={post} />)}
+      {isLoadingPosts ? (
+        <Loader />
+      ) : isErrorPosts ? (
+        <Text textStyle="h1">Error loading posts</Text>
+      ) : (
+        posts &&
+        posts.map((post) => <PostItem key={post.post_id} post={post} />)
+      )}
     </Flex>
   );
 };

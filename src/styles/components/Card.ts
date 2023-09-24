@@ -16,7 +16,7 @@ const baseStyle = definePartsStyle({
   header: {
     paddingBottom: 0,
     paddingX: {
-      base: 3,
+      base: 0,
       md: 8,
     },
   },
@@ -26,7 +26,7 @@ const baseStyle = definePartsStyle({
     fontSize: "md",
     paddingTop: 3,
     paddingX: {
-      base: 3,
+      base: 0,
       md: 8,
     },
     gap: 3,

@@ -14,9 +14,9 @@ import { useForm } from "react-hook-form";
 
 import useFetchAccessToken from "../hooks/useFetchAccessToken";
 import { loginSchema } from "../utils/validations";
-import constel from "../../../assets/constel.svg";
 import { Routes } from "../../../routes/config";
 import useAuth from "../hooks/useAuth";
+import constel from "/constel.svg";
 
 interface FormData {
   email: string;
@@ -51,9 +51,7 @@ const LoginForm = () => {
         <Image maxW="80px" alt="Constellation" src={constel} />
 
         <FormControl isInvalid={Boolean(errors.email)}>
-          <FormLabel fontSize="lg" fontWeight="black">
-            Email
-          </FormLabel>
+          <FormLabel textStyle="h1">Email</FormLabel>
           <Input
             _focusVisible={{
               boxShadow: "0",
@@ -70,9 +68,7 @@ const LoginForm = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.password)}>
-          <FormLabel fontSize="lg" fontWeight="black">
-            Password
-          </FormLabel>
+          <FormLabel textStyle="h1">Password</FormLabel>
           <Input
             _focusVisible={{
               boxShadow: "0",

@@ -4,7 +4,7 @@ import { FETCH_USER_KEY, fetchUserApi } from "../utils/api";
 import { User } from "../utils/types";
 
 const useFetchUser = (shouldFetch: boolean) => {
-  const { data: user, isLoading: isUserLoading } = useQuery<User>(
+  const { data: user, isLoading: isLoadingUser } = useQuery<User>(
     [FETCH_USER_KEY],
     fetchUserApi,
     {
@@ -14,7 +14,7 @@ const useFetchUser = (shouldFetch: boolean) => {
 
   return {
     user,
-    isUserLoading,
+    isLoadingUser,
   };
 };
 

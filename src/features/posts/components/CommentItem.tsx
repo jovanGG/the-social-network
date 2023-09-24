@@ -1,43 +1,62 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { Flex, Avatar, Text, Button } from "@chakra-ui/react";
+import {
+  useBreakpointValue,
+  Divider,
+  Button,
+  Flex,
+  Text,
+} from "@chakra-ui/react";
+import { FaRegTrashCan } from "react-icons/fa6";
 
-import { formatDate } from "../utils/formatDate";
+import useDeletePostComment from "../hooks/useDeletePostComment";
 import useAuth from "../../auth/hooks/useAuth";
 import { PostComment } from "../utils/types";
+import UserBadge from "./UserBadge";
+import PostDate from "./PostDate";
 
-const CommentItem: React.FC<PostComment> = ({
+interface CommentItemProps extends PostComment {
+  postId: string;
+}
+
+const CommentItem: React.FC<CommentItemProps> = ({
+  comment_id,
   created_at,
   full_name,
   username,
   picture,
+  postId,
   text,
 }) => {
   const { user } = useAuth();
+  const isMobile = useBreakpointValue(
+    { base: true, md: false },
+    { ssr: false }
+  );
+
+  const { deleteComment, isDeletingComment } = useDeletePostComment(
+    postId,
+    comment_id
+  );
+
+  const handleDeleteComment = () => {
+    deleteComment();
+  };
 
   return (
     <Flex flexDir="column" gap={2}>
       <Flex justifyContent="space-between">
-        <Flex gap={3}>
-          <Avatar size="md" name={full_name} src={picture} />
-          <Flex flexDir="column">
-            <Text color="grey-3.500" fontSize="sm">
-              @{username}
-            </Text>
-            <Text fontSize="md" color="black.500" fontWeight="bold">
-              {full_name}
-            </Text>
-          </Flex>
-        </Flex>
+        <UserBadge
+          full_name={full_name}
+          username={username}
+          picture={picture}
+        />
         <Flex alignItems="center" gap={3}>
-          <FontAwesomeIcon color="#A6A6A6" icon={faCalendar} size="sm" />
-          <Text textColor="grey-3.500" fontSize="sm">
-            {formatDate(created_at)}
-          </Text>
+          <PostDate createdAt={created_at} />
 
-          {user?.account.username === username && (
+          {!isMobile && user?.account.username === username && (
             <Button
-              leftIcon={<FontAwesomeIcon icon={faTrashCan} />}
+              isLoading={isDeletingComment}
+              onClick={handleDeleteComment}
+              leftIcon={<FaRegTrashCan />}
               fontWeight="normal"
               variant="link"
               color="red"
@@ -49,9 +68,26 @@ const CommentItem: React.FC<PostComment> = ({
         </Flex>
       </Flex>
 
-      <Flex>
-        <Text color="black.500">{text}</Text>
-      </Flex>
+      <Text textStyle="p2">{text}</Text>
+
+      {isMobile && (
+        <>
+          <Divider borderColor="grey-2.500" mb={2} />
+          {user?.account.username === username && (
+            <Button
+              isLoading={isDeletingComment}
+              onClick={handleDeleteComment}
+              leftIcon={<FaRegTrashCan />}
+              fontWeight="normal"
+              variant="link"
+              color="red"
+              size="sm"
+            >
+              Delete
+            </Button>
+          )}
+        </>
+      )}
     </Flex>
   );
 };

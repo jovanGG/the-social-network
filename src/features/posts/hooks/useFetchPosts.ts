@@ -4,14 +4,16 @@ import { FETCH_POSTS_KEY, fetchPostsApi } from "../utils/api";
 import { PostsApiRepsonse } from "../utils/types";
 
 const useFetchPosts = () => {
-  const { data, isLoading: isPostsLoading } = useQuery<PostsApiRepsonse>(
-    [FETCH_POSTS_KEY],
-    fetchPostsApi
-  );
+  const {
+    data,
+    isError: isErrorPosts,
+    isLoading: isLoadingPosts,
+  } = useQuery<PostsApiRepsonse>([FETCH_POSTS_KEY], fetchPostsApi);
 
   return {
     posts: data?.posts,
-    isPostsLoading,
+    isLoadingPosts,
+    isErrorPosts,
   };
 };
 

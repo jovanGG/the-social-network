@@ -1,14 +1,14 @@
-import { faHouse } from "@fortawesome/free-solid-svg-icons/faHouse";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Image, Flex } from "@chakra-ui/react";
+import { FaHouse } from "react-icons/fa6";
 
-import constel from "../assets/constel.svg";
+import constel from "/constel.svg";
 
 const Sidebar = () => {
   return (
     <Flex
       alignItems={{ base: "center", md: "baseline" }}
-      py={{ base: 3, md: 8 }}
+      py={{ base: 4, md: 8 }}
+      px={4}
       flexDir="column"
       width="full"
       gap={12}
@@ -17,9 +17,10 @@ const Sidebar = () => {
 
       <Flex display={{ base: "none", md: "flex" }}>
         <Button
-          leftIcon={<FontAwesomeIcon icon={faHouse} />}
+          leftIcon={<FaHouse />}
           colorScheme="blue"
-          variant="ghost"
+          variant="link"
+          size="md"
         >
           Home
         </Button>

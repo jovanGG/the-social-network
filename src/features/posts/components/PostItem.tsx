@@ -1,22 +1,21 @@
 import {
   CardHeader,
   CardBody,
-  Avatar,
   Button,
   Image,
   Card,
   Text,
   Flex,
 } from "@chakra-ui/react";
-import { faComment, faCalendar } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { FaHeart, FaRegComment } from "react-icons/fa";
 
 import useSendLikeStatus from "../hooks/useSendLikeStatus";
-import { formatDate } from "../utils/formatDate";
 import PostPreview from "./PostPreview";
 import ModalDrawer from "./ModalDrawer";
 import { Post } from "../utils/types";
+import UserBadge from "./UserBadge";
+import PostDate from "./PostDate";
+import Player from "./Player";
 
 interface PostItemProps {
   post: Post;
@@ -24,7 +23,7 @@ interface PostItemProps {
 
 const PostItem: React.FC<PostItemProps> = ({ post }) => {
   const {
-    user: { username, full_name, picture },
+    user,
     created_at,
     comments,
     post_id,
@@ -46,23 +45,8 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
     <Card>
       <CardHeader>
         <Flex justifyContent="space-between">
-          <Flex gap={3}>
-            <Avatar size="md" name={full_name} src={picture} />
-            <Flex flexDir="column">
-              <Text color="grey-3.500" fontSize="sm">
-                @{username}
-              </Text>
-              <Text fontSize="md" color="black.500" fontWeight="bold">
-                {full_name}
-              </Text>
-            </Flex>
-          </Flex>
-          <Flex alignItems="center" gap={1}>
-            <FontAwesomeIcon color="#A6A6A6" icon={faCalendar} size="sm" />
-            <Text textColor="grey-3.500" fontSize="sm">
-              {formatDate(created_at)}
-            </Text>
-          </Flex>
+          <UserBadge {...user} />
+          <PostDate createdAt={created_at} />
         </Flex>
       </CardHeader>
       <CardBody>
@@ -70,18 +54,20 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
           <Image
             borderRadius={10}
             objectFit="cover"
-            width="full"
             maxH="285px"
+            width="full"
             src={image}
           />
         )}
-        {audio && <Text>Has audio</Text>}
-        <Text color="black.500">{text}</Text>
+
+        {audio && <Player src={audio} />}
+
+        <Text textStyle="p2">{text}</Text>
 
         <Flex gap={4}>
           <Button
             isLoading={isLikeStatusSending || isUnlikeStatusSending}
-            leftIcon={<FontAwesomeIcon icon={faHeart} />}
+            leftIcon={<FaHeart />}
             onClick={handleLikeChange}
             variant="brandPrimaryAlt"
             isActive={liked}
@@ -92,7 +78,7 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
           <ModalDrawer
             renderButton={({ onOpen }) => (
               <Button
-                leftIcon={<FontAwesomeIcon icon={faComment} />}
+                leftIcon={<FaRegComment />}
                 variant="brandPrimaryAlt"
                 onClick={onOpen}
                 size="small"
@@ -100,7 +86,7 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
                 {comments}
               </Button>
             )}
-            children={<PostPreview post={post} />}
+            children={<PostPreview postId={post.post_id} />}
           />
         </Flex>
       </CardBody>

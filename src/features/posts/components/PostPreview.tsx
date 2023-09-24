@@ -1,93 +1,97 @@
-import { Avatar, Flex, Text, Image, Button } from "@chakra-ui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar } from "@fortawesome/free-regular-svg-icons";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { Flex, Text, Image, Button } from "@chakra-ui/react";
+import { FaRegComment, FaHeart } from "react-icons/fa6";
 
 import useFetchPostComments from "../hooks/useFetchPostComments";
 import useSendLikeStatus from "../hooks/useSendLikeStatus";
-import { formatDate } from "../utils/formatDate";
+import useFetchPost from "../hooks/useFetchPost";
 import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
-import { Post } from "../utils/types";
+import UserBadge from "./UserBadge";
+import PostDate from "./PostDate";
+import Player from "./Player";
 import Loader from "./Loader";
 
 interface PostPreviewProps {
-  post: Post;
+  postId: string;
 }
 
-const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
-  const { comments, isCommentsLoading } = useFetchPostComments(post.post_id);
+const PostPreview: React.FC<PostPreviewProps> = ({ postId }) => {
+  const { post, isLoadingPost, isErrorPost } = useFetchPost(postId);
+  const { comments, isLoadingComments, isErrorComments } =
+    useFetchPostComments(postId);
 
   const { sendLikeOrUnlike, isLikeStatusSending, isUnlikeStatusSending } =
-    useSendLikeStatus(post.post_id);
+    useSendLikeStatus(postId);
 
-  const handleLikeChange = () => {
-    sendLikeOrUnlike(post.liked);
+  const handleLikeChange = (isLiked: boolean) => {
+    sendLikeOrUnlike(isLiked);
   };
 
   return (
-    <Flex gap={5} flexDir="column">
-      <Flex gap={2} flexDir="column">
-        <Flex gap={3}>
-          <Avatar
-            size="md"
-            name={post.user.full_name}
-            src={post.user.picture}
-          />
-          <Flex flexDir="column">
-            <Text color="grey-3.500" fontSize="sm">
-              @{post.user.username}
-            </Text>
-            <Text fontSize="md" color="black.500" fontWeight="bold">
-              {post.user.full_name}
-            </Text>
-          </Flex>
-        </Flex>
+    <>
+      <Flex gap={5} flexDir="column">
+        {isLoadingPost ? (
+          <Loader />
+        ) : isErrorPost ? (
+          <Text textStyle="h1">Error loading post</Text>
+        ) : (
+          post && (
+            <Flex gap={2} flexDir="column">
+              <UserBadge {...post.user} />
 
-        {post.image && (
-          <Image
-            borderRadius={10}
-            objectFit="cover"
-            width="full"
-            maxH="285px"
-            src={post.image}
-          />
+              {post.image && (
+                <Image
+                  borderRadius={10}
+                  objectFit="cover"
+                  width="full"
+                  maxH="285px"
+                  src={post.image}
+                />
+              )}
+              {post.audio && <Player src={post.audio} />}
+
+              <PostDate createdAt={post.created_at} />
+
+              <Text fontSize="md" color="black.500">
+                {post.text}
+              </Text>
+
+              <CommentForm postId={post.post_id} />
+
+              <Flex gap={4}>
+                <Button
+                  isLoading={isLikeStatusSending || isUnlikeStatusSending}
+                  leftIcon={<FaHeart />}
+                  onClick={() => handleLikeChange(post.liked)}
+                  variant="brandPrimaryAlt"
+                  isActive={post.liked}
+                  size="small"
+                >
+                  {post.likes}
+                </Button>
+
+                <Button
+                  leftIcon={<FaRegComment />}
+                  variant="brandPrimaryAlt"
+                  pointerEvents="none"
+                  size="small"
+                >
+                  {post.comments}
+                </Button>
+              </Flex>
+            </Flex>
+          )
         )}
-        {post.audio && <Text>Has audio</Text>}
 
-        <Flex alignItems="center" gap={1}>
-          <FontAwesomeIcon color="#A6A6A6" icon={faCalendar} size="sm" />
-          <Text textColor="grey-3.500" fontSize="sm">
-            {formatDate(post.created_at)}
-          </Text>
-        </Flex>
-
-        <Text fontSize="md" color="black.500">
-          {post.text}
-        </Text>
-
-        <CommentForm postId={post.post_id} />
-
-        <Flex gap={4}>
-          <Button
-            isLoading={isLikeStatusSending || isUnlikeStatusSending}
-            leftIcon={<FontAwesomeIcon icon={faHeart} />}
-            onClick={handleLikeChange}
-            variant="brandPrimaryAlt"
-            isActive={post.liked}
-            size="small"
-          >
-            {post.likes}
-          </Button>
-        </Flex>
+        {isLoadingComments ? (
+          <Loader />
+        ) : isErrorComments ? (
+          <Text textStyle="h1">Error loading comments</Text>
+        ) : (
+          comments && <CommentList postId={postId} comments={comments} />
+        )}
       </Flex>
-
-      {isCommentsLoading ? (
-        <Loader />
-      ) : (
-        comments && <CommentList comments={comments} />
-      )}
-    </Flex>
+    </>
   );
 };
 

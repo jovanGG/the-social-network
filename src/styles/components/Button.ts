@@ -10,8 +10,39 @@ const medium = defineStyle({
 const small = defineStyle({
   borderRadius: 5,
   fontSize: "md",
-  w: 90,
+  w: {
+    base: "100%",
+    md: 90,
+  },
   h: 34,
+});
+
+const brandBlue = defineStyle({
+  background: "blue.500",
+  color: "white",
+  _hover: {
+    background: "blue-hover.500",
+  },
+  _active: {
+    background: "blue.500",
+    _hover: {
+      background: "blue-hover.500",
+    },
+  },
+});
+
+const brandRed = defineStyle({
+  background: "red.500",
+  color: "white",
+  _hover: {
+    background: "red.500",
+  },
+  _active: {
+    background: "red.500",
+    _hover: {
+      background: "red.500",
+    },
+  },
 });
 
 const brandPrimary = defineStyle({
@@ -45,6 +76,6 @@ const brandPrimaryAlt = defineStyle({
 });
 
 export const Button = defineStyleConfig({
-  variants: { brandPrimary, brandPrimaryAlt },
+  variants: { brandBlue, brandRed, brandPrimary, brandPrimaryAlt },
   sizes: { small, medium },
 });

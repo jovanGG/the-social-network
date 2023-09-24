@@ -5,5 +5,5 @@ export const commentSchema = Yup.object({
 });
 
 export const postSchema = Yup.object({
-  text: Yup.string().required().label("Text"),
+  text: Yup.string().trim().required().label("Text"),
 });

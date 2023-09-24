@@ -5,9 +5,9 @@ import {
   IconButton,
   InputGroup,
   Input,
+  Icon,
 } from "@chakra-ui/react";
-import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaRegPaperPlane } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 
 import useSendPostComment from "../hooks/useSendPostComment";
@@ -46,7 +46,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
 
           <InputRightElement>
             <IconButton
-              icon={<FontAwesomeIcon color="gray-3.500" icon={faPaperPlane} />}
+              icon={<Icon as={FaRegPaperPlane} fill="grey-3.500" />}
               isLoading={isSendingComment}
               aria-label="Submit"
               variant="unstyled"
